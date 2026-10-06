@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#1769e0">
-
 <title>QAP DMR — Monitoramento de TG</title>
 
 <style>
@@ -38,8 +37,7 @@ body{
   padding:12px 10px 30px
 }
 
-header,
-.card{
+header,.card{
   background:var(--card);
   border-radius:18px;
   box-shadow:var(--shadow);
@@ -213,8 +211,7 @@ table{
   min-width:600px
 }
 
-th,
-td{
+th,td{
   text-align:left;
   padding:11px 10px;
   border-bottom:1px solid var(--border);
@@ -251,8 +248,7 @@ footer{
     padding:9px 8px 24px
   }
 
-  header,
-  .card{
+  header,.card{
     padding:16px;
     border-radius:15px
   }
@@ -302,28 +298,32 @@ Monitoramento de Talkgroup DMR em tempo real
 <div>
 <label for="tg">Talkgroup (TG)</label>
 <input
-  id="tg"
-  type="number"
-  min="1"
-  step="1"
-  inputmode="numeric"
-  placeholder="Ex.: 72429">
+id="tg"
+type="number"
+min="1"
+step="1"
+inputmode="numeric"
+placeholder="Ex.: 72429">
 </div>
+
 
 <div>
 <label for="startDate">Data de início</label>
 <input id="startDate" type="date">
 </div>
 
+
 <div>
 <label for="startTime">Horário de início</label>
 <input id="startTime" type="time" value="00:00">
 </div>
 
+
 <div>
 <label for="endDate">Data de término</label>
 <input id="endDate" type="date">
 </div>
+
 
 <div>
 <label for="endTime">Horário de término</label>
@@ -351,18 +351,14 @@ Limpar resultados
 
 
 <div id="message" class="info">
-
 Informe a TG, a data e o período e clique em
 <b>Iniciar monitoramento</b>.
-
 </div>
 
 
 <div class="small">
-
 O horário usado é o horário local do celular ou computador.
 Para acompanhar uma rodada, mantenha esta página aberta durante o período.
-
 </div>
 
 </section>
@@ -440,7 +436,6 @@ QAP DMR • Monitorador de TG
 
 <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
 
-
 <script>
 
 (() => {
@@ -450,15 +445,12 @@ QAP DMR • Monitorador de TG
 
 const $ = id => document.getElementById(id);
 
-
 const pad = n => String(n).padStart(2,'0');
-
 
 const now = new Date();
 
 const today =
 `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
-
 
 $('startDate').value = today;
 $('endDate').value = today;
@@ -482,43 +474,12 @@ let windowEnd = null;
 
 let transmissions = 0;
 
-
-/*
-  Cada participante passa a ser identificado
-  principalmente pelo seu ID DMR.
-
-  Isso permite que:
-
-  7241234
-       ↓
-  posteriormente
-       ↓
-  PU9ABC
-
-  seja tratado como a MESMA pessoa.
-*/
-
 const people = new Map();
 
 
-/*
-  Guarda os eventos já processados para evitar
-  que o mesmo evento seja contado duas vezes.
-*/
+function escapeHtml(v){
 
-const processedEvents = new Set();
-
-const MAX_PROCESSED_EVENTS = 5000;
-
-
-/* -------------------------------------------------
-   FUNÇÕES BÁSICAS
-------------------------------------------------- */
-
-
-function escapeHtml(value){
-
-  return String(value ?? '').replace(
+  return String(v ?? '').replace(
     /[&<>"']/g,
     c => ({
       '&':'&amp;',
@@ -567,9 +528,9 @@ function makeDate(date,time){
 }
 
 
-function fmt(date){
+function fmt(d){
 
-  return date.toLocaleString(
+  return d.toLocaleString(
     'pt-BR',
     {
       dateStyle:'short',
@@ -580,159 +541,11 @@ function fmt(date){
 }
 
 
-/* -------------------------------------------------
-   IDENTIFICAÇÃO DO PARTICIPANTE
-------------------------------------------------- */
-
-
-/*
-  Verifica se o valor parece ser um ID DMR.
-
-  Exemplo:
-  1234567 → SIM
-  7241234 → SIM
-
-  PU9DPA → NÃO
-*/
-
-function isDMRId(value){
-
-  const s = String(value ?? '').trim();
-
-  return /^\d{5,10}$/.test(s);
-
-}
-
-
-/*
-  Verifica se o valor parece ser um indicativo.
-
-  A ideia é NÃO considerar um número de sete
-  dígitos como indicativo.
-
-  Exemplos:
-
-  PU9DPA → SIM
-  PY2ABC → SIM
-  7241234 → NÃO
-*/
-
-function isCallsign(value){
-
-  const s = String(value ?? '')
-    .trim()
-    .toUpperCase();
-
-  if(!s) return false;
-
-  if(isDMRId(s)) return false;
-
-  /*
-    Indicativo precisa conter pelo menos
-    uma letra e um número.
-  */
-
-  return /[A-Z]/.test(s) && /\d/.test(s);
-
-}
-
-
-/*
-  Obtém o indicativo verdadeiro.
-
-  SourceCall é a fonte principal.
-
-  Se vier apenas um número, ele NÃO será
-  tratado como indicativo.
-*/
-
-function getCallsign(p){
-
-  const call = String(
-    p.SourceCall ?? ''
-  ).trim().toUpperCase();
-
-  if(isCallsign(call)){
-
-    return call;
-
-  }
-
-  return '';
-
-}
-
-
-/*
-  Obtém o ID DMR.
-
-  SourceID é a fonte principal.
-*/
-
-function getDMRId(p){
-
-  const id = String(
-    p.SourceID ?? ''
-  ).trim();
-
-  if(isDMRId(id)){
-
-    return id;
-
-  }
-
-  return '';
-
-}
-
-
-/*
-  Cria uma chave única para o participante.
-
-  PRIORIDADE:
-
-  1. SourceID
-  2. SourceCall
-
-  Assim o ID permite juntar depois o
-  indicativo correto.
-*/
-
-function getPersonKey(p){
-
-  const id = getDMRId(p);
-
-  if(id){
-
-    return 'ID:' + id;
-
-  }
-
-  const call = getCallsign(p);
-
-  if(call){
-
-    return 'CALL:' + call;
-
-  }
-
-  return '';
-
-}
-
-
-/* -------------------------------------------------
-   RESET / RENDER
-------------------------------------------------- */
-
-
 function resetResults(){
 
   people.clear();
 
   transmissions = 0;
-
-  processedEvents.clear();
 
   render();
 
@@ -749,99 +562,75 @@ function render(){
   if(!people.size){
 
     $('list').innerHTML =
-      '<tr>' +
-      '<td colspan="4" class="empty">' +
+      '<tr><td colspan="4" class="empty">' +
       'Nenhuma transmissão registrada.' +
-      '</td>' +
-      '</tr>';
+      '</td></tr>';
 
     return;
-
   }
 
 
-  const arr = [...people.values()]
-    .sort((a,b) => a.first - b.first);
+  const arr =
+    [...people.values()]
+    .sort((a,b)=>a.first-b.first);
 
 
-  $('list').innerHTML = arr.map(p => {
+  $('list').innerHTML =
+    arr.map(p =>
 
-    /*
-      Se já temos indicativo:
-      mostra o indicativo.
+      `<tr>
+        <td><b>${escapeHtml(p.call)}</b></td>
+        <td>${escapeHtml(p.name || '—')}</td>
+        <td>${fmt(p.first)}</td>
+        <td>${fmt(p.last)}</td>
+      </tr>`
 
-      Caso contrário:
-      mostra o ID DMR como identificação
-      provisória.
-    */
-
-    const displayCall =
-      p.call ||
-      (p.id ? 'ID ' + p.id : 'Desconhecido');
-
-
-    return `
-      <tr>
-
-        <td>
-          <b>${escapeHtml(displayCall)}</b>
-        </td>
-
-        <td>
-          ${escapeHtml(p.name || '—')}
-        </td>
-
-        <td>
-          ${fmt(p.first)}
-        </td>
-
-        <td>
-          ${fmt(p.last)}
-        </td>
-
-      </tr>
-    `;
-
-  }).join('');
+    ).join('');
 
 }
-
-
-/* -------------------------------------------------
-   CONFIGURAÇÃO
-------------------------------------------------- */
 
 
 function validConfig(){
 
   const tg = Number($('tg').value);
 
-
   if(!Number.isInteger(tg) || tg < 1){
 
+    throw new Error('Informe uma TG válida.');
+
+  }
+
+
+  if(!$('startDate').value ||
+     !$('startTime').value ||
+     !$('endDate').value ||
+     !$('endTime').value){
+
     throw new Error(
-      'Informe uma TG válida.'
+      'Preencha a data e o horário de início e término.'
     );
 
   }
 
 
-  const s = makeDate(
-    $('startDate').value,
-    $('startTime').value
-  );
+  const s =
+    makeDate(
+      $('startDate').value,
+      $('startTime').value
+    );
 
 
-  const e = makeDate(
-    $('endDate').value,
-    $('endTime').value
-  );
+  const e =
+    makeDate(
+      $('endDate').value,
+      $('endTime').value
+    );
 
 
   if(isNaN(s) || isNaN(e)){
 
     throw new Error(
-      'Preencha data e horário.'
+      'Preencha data e horário corretamente.'
     );
 
   }
@@ -854,45 +643,3 @@ function validConfig(){
     );
 
   }
-
-
-  return {
-    tg,
-    start:s,
-    end:e
-  };
-
-}
-
-
-/* -------------------------------------------------
-   PARAR MONITORAMENTO
-------------------------------------------------- */
-
-
-function stop(
-  reason='Monitoramento parado pelo usuário.'
-){
-
-  running = false;
-
-  connecting = false;
-
-
-  clearTimeout(startTimer);
-
-  clearTimeout(endTimer);
-
-
-  startTimer = null;
-
-  endTimer = null;
-
-
-  if(socket){
-
-    try{
-
-      socket.disconnect();
-
-    }
