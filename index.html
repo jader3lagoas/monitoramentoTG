@@ -5,139 +5,1104 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#1769e0">
 <title>QAP DMR — Monitoramento de TG</title>
+
 <style>
 :root{--bg:#eef2f6;--card:#fff;--text:#18212b;--muted:#69747f;--blue:#1769e0;--blue2:#0f56bd;--red:#c62828;--green:#18864b;--border:#dce2e8;--shadow:0 7px 24px rgba(0,0,0,.08)}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
-.wrap{max-width:920px;margin:auto;padding:12px 10px 30px}header,.card{background:var(--card);border-radius:18px;box-shadow:var(--shadow);padding:20px;margin-bottom:14px}
-h1{margin:0 0 5px;font-size:clamp(25px,6vw,36px)}h2{margin:0 0 16px;font-size:20px}.sub{color:var(--muted);line-height:1.45}
-.status{display:inline-flex;align-items:center;gap:8px;margin-top:12px;padding:8px 12px;background:#f1f4f7;border-radius:999px;font-size:13px;font-weight:700}.dot{width:9px;height:9px;border-radius:50%;background:#8b949e}.dot.ok{background:var(--green)}.dot.bad{background:var(--red)}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}label{display:block;font-size:14px;font-weight:700;margin-bottom:6px}input{width:100%;padding:13px 12px;border:1px solid var(--border);border-radius:11px;font-size:16px;background:#fff;color:var(--text)}input:focus{outline:2px solid #1769e033;border-color:var(--blue)}
-.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}button{border:0;border-radius:11px;padding:13px 16px;font-size:15px;font-weight:700;cursor:pointer}.primary{background:var(--blue);color:#fff}.primary:hover{background:var(--blue2)}.danger{background:var(--red);color:#fff}.secondary{background:#e9edf1;color:#27313c}button:disabled{opacity:.45;cursor:not-allowed}
-.info{margin-top:14px;padding:12px;border-radius:11px;background:#f3f5f7;color:#4f5b66;font-size:14px;line-height:1.5}.small{font-size:12px;color:var(--muted);line-height:1.5;margin-top:10px}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.stat{background:#f6f8fa;border:1px solid var(--border);border-radius:12px;padding:13px;text-align:center}.stat span{display:block;color:var(--muted);font-size:12px}.stat b{display:block;font-size:25px;margin-top:4px}
-.table-wrap{overflow:auto;border:1px solid var(--border);border-radius:12px;margin-top:14px}table{width:100%;border-collapse:collapse;min-width:600px}th,td{text-align:left;padding:11px 10px;border-bottom:1px solid var(--border);font-size:14px}th{background:#f6f8fa;color:var(--muted);font-size:12px;text-transform:uppercase}tr:last-child td{border-bottom:0}.empty{text-align:center;color:var(--muted);padding:26px}
-footer{text-align:center;color:var(--muted);font-size:12px;padding:6px}.hidden{display:none}
-@media(max-width:650px){.wrap{padding:9px 8px 24px}header,.card{padding:16px;border-radius:15px}.grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(3,1fr)}button{flex:1;min-width:135px}}
+
+*{box-sizing:border-box}
+
+body{
+margin:0;
+background:var(--bg);
+color:var(--text);
+font-family:Arial,Helvetica,sans-serif
+}
+
+.wrap{
+max-width:920px;
+margin:auto;
+padding:12px 10px 30px
+}
+
+header,.card{
+background:var(--card);
+border-radius:18px;
+box-shadow:var(--shadow);
+padding:20px;
+margin-bottom:14px
+}
+
+h1{
+margin:0 0 5px;
+font-size:clamp(25px,6vw,36px)
+}
+
+h2{
+margin:0 0 16px;
+font-size:20px
+}
+
+.sub{
+color:var(--muted);
+line-height:1.45
+}
+
+.status{
+display:inline-flex;
+align-items:center;
+gap:8px;
+margin-top:12px;
+padding:8px 12px;
+background:#f1f4f7;
+border-radius:999px;
+font-size:13px;
+font-weight:700
+}
+
+.dot{
+width:9px;
+height:9px;
+border-radius:50%;
+background:#8b949e
+}
+
+.dot.ok{
+background:var(--green)
+}
+
+.dot.bad{
+background:var(--red)
+}
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:13px
+}
+
+label{
+display:block;
+font-size:14px;
+font-weight:700;
+margin-bottom:6px
+}
+
+input{
+width:100%;
+padding:13px 12px;
+border:1px solid var(--border);
+border-radius:11px;
+font-size:16px;
+background:#fff;
+color:var(--text)
+}
+
+input:focus{
+outline:2px solid #1769e033;
+border-color:var(--blue)
+}
+
+.actions{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+margin-top:16px
+}
+
+button{
+border:0;
+border-radius:11px;
+padding:13px 16px;
+font-size:15px;
+font-weight:700;
+cursor:pointer
+}
+
+.primary{
+background:var(--blue);
+color:#fff
+}
+
+.primary:hover{
+background:var(--blue2)
+}
+
+.danger{
+background:var(--red);
+color:#fff
+}
+
+.secondary{
+background:#e9edf1;
+color:#27313c
+}
+
+button:disabled{
+opacity:.45;
+cursor:not-allowed
+}
+
+.info{
+margin-top:14px;
+padding:12px;
+border-radius:11px;
+background:#f3f5f7;
+color:#4f5b66;
+font-size:14px;
+line-height:1.5
+}
+
+.small{
+font-size:12px;
+color:var(--muted);
+line-height:1.5;
+margin-top:10px
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px
+}
+
+.stat{
+background:#f6f8fa;
+border:1px solid var(--border);
+border-radius:12px;
+padding:13px;
+text-align:center
+}
+
+.stat span{
+display:block;
+color:var(--muted);
+font-size:12px
+}
+
+.stat b{
+display:block;
+font-size:25px;
+margin-top:4px
+}
+
+.table-wrap{
+overflow:auto;
+border:1px solid var(--border);
+border-radius:12px;
+margin-top:14px
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+min-width:600px
+}
+
+th,td{
+text-align:left;
+padding:11px 10px;
+border-bottom:1px solid var(--border);
+font-size:14px
+}
+
+th{
+background:#f6f8fa;
+color:var(--muted);
+font-size:12px;
+text-transform:uppercase
+}
+
+tr:last-child td{
+border-bottom:0
+}
+
+.empty{
+text-align:center;
+color:var(--muted);
+padding:26px
+}
+
+footer{
+text-align:center;
+color:var(--muted);
+font-size:12px;
+padding:6px
+}
+
+.hidden{
+display:none
+}
+
+@media(max-width:650px){
+
+.wrap{
+padding:9px 8px 24px
+}
+
+header,.card{
+padding:16px;
+border-radius:15px
+}
+
+.grid{
+grid-template-columns:1fr
+}
+
+.stats{
+grid-template-columns:repeat(3,1fr)
+}
+
+button{
+flex:1;
+min-width:135px
+}
+
+}
 </style>
 </head>
+
 <body>
+
 <div class="wrap">
+
 <header>
+
 <h1>📡 QAP DMR</h1>
-<div class="sub">Monitoramento de Talkgroup DMR em tempo real</div>
-<div class="status"><span id="dot" class="dot"></span><span id="connection">Aguardando</span></div>
+
+<div class="sub">
+Monitoramento de Talkgroup DMR em tempo real
+</div>
+
+<div class="status">
+<span id="dot" class="dot"></span>
+<span id="connection">Aguardando</span>
+</div>
+
 </header>
 
-<section class="card">
-<h2>Configurar monitoramento</h2>
-<div class="grid">
-<div><label for="tg">Talkgroup (TG)</label><input id="tg" type="number" min="1" step="1" inputmode="numeric" placeholder="Ex.: 72429"></div>
-<div><label for="startDate">Data de início</label><input id="startDate" type="date"></div>
-<div><label for="startTime">Horário de início</label><input id="startTime" type="time" value="00:00"></div>
-<div><label for="endDate">Data de término</label><input id="endDate" type="date"></div>
-<div><label for="endTime">Horário de término</label><input id="endTime" type="time" value="23:59"></div>
-</div>
-<div class="actions">
-<button id="start" class="primary">▶ Iniciar monitoramento</button>
-<button id="stop" class="danger" disabled>⏹ Parar monitoramento</button>
-<button id="clear" class="secondary">Limpar resultados</button>
-</div>
-<div id="message" class="info">Informe a TG, a data e o período e clique em <b>Iniciar monitoramento</b>.</div>
-<div class="small">O horário usado é o horário local do celular ou computador. Para acompanhar uma rodada, mantenha esta página aberta durante o período.</div>
-</section>
 
 <section class="card">
-<div class="stats">
-<div class="stat"><span>Participantes únicos</span><b id="participants">0</b></div>
-<div class="stat"><span>Transmissões</span><b id="transmissions">0</b></div>
-<div class="stat"><span>TG</span><b id="shownTG">—</b></div>
+
+<h2>Configurar monitoramento</h2>
+
+<div class="grid">
+
+<div>
+<label for="tg">Talkgroup (TG)</label>
+<input
+id="tg"
+type="number"
+min="1"
+step="1"
+inputmode="numeric"
+placeholder="Ex.: 72429">
 </div>
-<div class="table-wrap">
-<table><thead><tr><th>Indicativo</th><th>Nome</th><th>Primeira transmissão</th><th>Última transmissão</th></tr></thead><tbody id="list"><tr><td colspan="4" class="empty">Nenhuma transmissão registrada.</td></tr></tbody></table>
+
+<div>
+<label for="startDate">Data de início</label>
+<input id="startDate" type="date">
 </div>
-<div class="actions"><button id="copy" class="secondary">📋 Copiar participantes</button></div>
+
+<div>
+<label for="startTime">Horário de início</label>
+<input id="startTime" type="time" value="00:00">
+</div>
+
+<div>
+<label for="endDate">Data de término</label>
+<input id="endDate" type="date">
+</div>
+
+<div>
+<label for="endTime">Horário de término</label>
+<input id="endTime" type="time" value="23:59">
+</div>
+
+</div>
+
+
+<div class="actions">
+
+<button id="start" class="primary">
+▶ Iniciar monitoramento
+</button>
+
+<button id="stop" class="danger" disabled>
+⏹ Parar monitoramento
+</button>
+
+<button id="clear" class="secondary">
+Limpar resultados
+</button>
+
+</div>
+
+
+<div id="message" class="info">
+Informe a TG, a data e o período e clique em
+<b>Iniciar monitoramento</b>.
+</div>
+
+
+<div class="small">
+O horário usado é o horário local do celular ou computador.
+Para acompanhar uma rodada, mantenha esta página aberta durante o período.
+</div>
+
 </section>
-<footer>QAP DMR • Monitorador de TG</footer>
+
+
+<section class="card">
+
+<div class="stats">
+
+<div class="stat">
+<span>Participantes únicos</span>
+<b id="participants">0</b>
 </div>
+
+<div class="stat">
+<span>Transmissões</span>
+<b id="transmissions">0</b>
+</div>
+
+<div class="stat">
+<span>TG</span>
+<b id="shownTG">—</b>
+</div>
+
+</div>
+
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+<th>Indicativo</th>
+<th>Nome</th>
+<th>Primeira transmissão</th>
+<th>Última transmissão</th>
+</tr>
+
+</thead>
+
+<tbody id="list">
+
+<tr>
+<td colspan="4" class="empty">
+Nenhuma transmissão registrada.
+</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+
+<div class="actions">
+
+<button id="copy" class="secondary">
+📋 Copiar participantes
+</button>
+
+</div>
+
+</section>
+
+
+<footer>
+QAP DMR • Monitorador de TG
+</footer>
+
+</div>
+
 
 <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
+
+
 <script>
+
 (() => {
+
 'use strict';
-const $=id=>document.getElementById(id);
-const pad=n=>String(n).padStart(2,'0');
-const now=new Date();
-const today=`${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
-$('startDate').value=today;$('endDate').value=today;
 
-let socket=null,running=false,connecting=false,endTimer=null,startTimer=null;
-let currentTG=null,windowStart=null,windowEnd=null,transmissions=0;
-const people=new Map();
 
-function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));}
-function setConnection(text,kind=''){ $('connection').textContent=text;$('dot').className='dot '+kind; }
-function msg(html){$('message').innerHTML=html;}
-function makeDate(date,time){const [y,m,d]=date.split('-').map(Number),[h,mi]=time.split(':').map(Number);return new Date(y,m-1,d,h,mi,0,0);}
-function fmt(d){return d.toLocaleString('pt-BR',{dateStyle:'short',timeStyle:'medium'});}
-function resetResults(){people.clear();transmissions=0;render();}
+const $ = id => document.getElementById(id);
+
+const pad = n => String(n).padStart(2,'0');
+
+const now = new Date();
+
+const today =
+`${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
+
+$('startDate').value = today;
+$('endDate').value = today;
+
+
+let socket = null;
+
+let running = false;
+
+let connecting = false;
+
+let endTimer = null;
+
+let startTimer = null;
+
+let currentTG = null;
+
+let windowStart = null;
+
+let windowEnd = null;
+
+let transmissions = 0;
+
+
+const people = new Map();
+
+
+function escapeHtml(v){
+
+return String(v ?? '').replace(
+/[&<>"']/g,
+c => ({
+'&':'&amp;',
+'<':'&lt;',
+'>':'&gt;',
+'"':'&quot;',
+"'":'&#039;'
+}[c])
+);
+
+}
+
+
+function setConnection(text,kind=''){
+
+$('connection').textContent = text;
+
+$('dot').className = 'dot ' + kind;
+
+}
+
+
+function msg(html){
+
+$('message').innerHTML = html;
+
+}
+
+
+function makeDate(date,time){
+
+const [y,m,d] =
+date.split('-').map(Number);
+
+const [h,mi] =
+time.split(':').map(Number);
+
+return new Date(
+y,
+m-1,
+d,
+h,
+mi,
+0,
+0
+);
+
+}
+
+
+function fmt(d){
+
+return d.toLocaleString(
+'pt-BR',
+{
+dateStyle:'short',
+timeStyle:'medium'
+}
+);
+
+}
+
+
+function resetResults(){
+
+people.clear();
+
+transmissions = 0;
+
+render();
+
+}
+
+
 function render(){
- $('participants').textContent=people.size;$('transmissions').textContent=transmissions;
- if(!people.size){$('list').innerHTML='<tr><td colspan="4" class="empty">Nenhuma transmissão registrada.</td></tr>';return;}
- const arr=[...people.values()].sort((a,b)=>a.first-b.first);
- $('list').innerHTML=arr.map(p=>`<tr><td><b>${escapeHtml(p.call)}</b></td><td>${escapeHtml(p.name||'—')}</td><td>${fmt(p.first)}</td><td>${fmt(p.last)}</td></tr>`).join('');
+
+$('participants').textContent =
+people.size;
+
+$('transmissions').textContent =
+transmissions;
+
+
+if(!people.size){
+
+$('list').innerHTML =
+'<tr><td colspan="4" class="empty">' +
+'Nenhuma transmissão registrada.' +
+'</td></tr>';
+
+return;
+
 }
+
+
+const arr =
+[...people.values()]
+.sort((a,b) => a.first - b.first);
+
+
+$('list').innerHTML =
+arr.map(p =>
+
+`<tr>
+<td><b>${escapeHtml(p.call)}</b></td>
+<td>${escapeHtml(p.name || '—')}</td>
+<td>${fmt(p.first)}</td>
+<td>${fmt(p.last)}</td>
+</tr>`
+
+).join('');
+
+}
+
+
 function validConfig(){
- const tg=Number($('tg').value);if(!Number.isInteger(tg)||tg<1)throw new Error('Informe uma TG válida.');
- const s=makeDate($('startDate').value,$('startTime').value),e=makeDate($('endDate').value,$('endTime').value);
- if(isNaN(s)||isNaN(e))throw new Error('Preencha data e horário.');
- if(e<=s)throw new Error('A data/horário de término deve ser posterior ao início.');
- return {tg,start:s,end:e};
+
+const tg =
+Number($('tg').value);
+
+
+if(!Number.isInteger(tg) || tg < 1){
+
+throw new Error(
+'Informe uma TG válida.'
+);
+
 }
-function stop(reason='Monitoramento parado pelo usuário.'){
- running=false;connecting=false;clearTimeout(startTimer);clearTimeout(endTimer);startTimer=endTimer=null;
- if(socket){try{socket.disconnect();}catch(e){}socket=null;}
- $('start').disabled=false;$('stop').disabled=true;setConnection('Desconectado');
- msg(`⏹ <b>${escapeHtml(reason)}</b><br>Participantes únicos registrados: <b>${people.size}</b>.`);
+
+
+const s =
+makeDate(
+$('startDate').value,
+$('startTime').value
+);
+
+
+const e =
+makeDate(
+$('endDate').value,
+$('endTime').value
+);
+
+
+if(isNaN(s) || isNaN(e)){
+
+throw new Error(
+'Preencha data e horário.'
+);
+
 }
-function connect(){
- if(socket)return;
- connecting=true;setConnection('Conectando ao Last Heard…');
- socket=io('https://api.brandmeister.network',{path:'/lh/socket.io',transports:['websocket'],reconnection:true,reconnectionAttempts:Infinity,reconnectionDelay:3000,reconnectionDelayMax:30000,timeout:10000});
- socket.on('connect',()=>{connecting=false;setConnection('Conectado ao BrandMeister','ok');socket.emit('join','everything');msg(`🟢 <b>Monitorando TG ${currentTG}</b><br>Período: ${fmt(windowStart)} até ${fmt(windowEnd)}.`);});
- socket.on('disconnect',()=>{if(running){setConnection('Desconectado — tentando reconectar…','bad');msg('⚠️ A conexão com o Last Heard foi interrompida. O aplicativo tentará reconectar automaticamente.');}});
- socket.on('connect_error',()=>{if(running){setConnection('Falha de conexão — tentando novamente…','bad');}});
- socket.on('mqtt',data=>handleEvent(data));
+
+
+if(e <= s){
+
+throw new Error(
+'A data/horário de término deve ser posterior ao início.'
+);
+
 }
-function handleEvent(data){
- if(!running||!data)return;
- try{
-  const raw=data.payload;const p=typeof raw==='string'?JSON.parse(raw):raw;if(!p)return;
-  const destination=Number(p.DestinationID);if(destination!==currentTG)return;
-  if(String(p.Event)!=='Session-Stop')return;
-  const epoch=Number(p.Stop||0);const when=epoch?new Date(epoch*1000):new Date();
-  if(when<windowStart||when>windowEnd)return;
-  const call=String(p.SourceCall||p.SourceID||'DESCONHECIDO').trim().toUpperCase();
-  transmissions++;
-  const old=people.get(call);
-  if(old){old.last=when;if(p.SourceName)old.name=p.SourceName;}else people.set(call,{call,name:p.SourceName||'',first:when,last:when,id:p.SourceID||''});
-  render();msg(`🟢 <b>Monitorando TG ${currentTG}</b><br>Última transmissão: <b>${escapeHtml(call)}</b> às ${when.toLocaleTimeString('pt-BR')}.`);
- }catch(e){console.warn('Evento Last Heard inválido',e);}
-}
-$('start').onclick=()=>{
- try{
-  const c=validConfig();currentTG=c.tg;windowStart=c.start;windowEnd=c.end;resetResults();$('shownTG').textContent=currentTG;running=true;
-  $('start').disabled=true;$('stop').disabled=false;
-  if(Date.now()<c.start.getTime()){
-   setConnection('Aguardando horário de início');msg(`⏳ Monitoramento agendado para <b>${fmt(c.start)}</b>.<br>A página precisa permanecer aberta até o início.`);
-   startTimer=setTimeout(()=>{if(running){connect();}},Math.max(0,c.start-Date.now()));
-  }else connect();
-  endTimer=setTimeout(()=>stop('O horário de término configurado foi atingido.'),Math.max(0,c.end-Date.now()));
- }catch(e){alert(e.message);}
+
+
+return {
+tg,
+start:s,
+end:e
 };
-$('stop').onclick=()=>stop();
-$('clear').onclick=()=>{if(running)return alert('Pare o monitoramento antes de limpar os resultados.');resetResults();$('shownTG').textContent='—';msg('Resultados limpos. Pronto para um novo monitoramento.');};
-$('copy').onclick=async()=>{
- if(!people.size)return alert('Ainda não há participantes registrados.');
- const arr=[...people.values()].sort((a,b)=>a.first-b.first);
- const text=[`QAP DMR — MONITORAMENTO TG ${currentTG||$('tg').value}`,`Participantes únicos: ${people.size}`,'',...arr.map((p,i)=>`${i+1}. ${p.call} — ${p.name||'Nome não informado'} — primeira: ${fmt(p.first)}`)].join('\n');
- try{await
+
+}
+
+
+function stop(
+reason='Monitoramento parado pelo usuário.'
+){
+
+running = false;
+
+connecting = false;
+
+clearTimeout(startTimer);
+
+clearTimeout(endTimer);
+
+startTimer = null;
+
+endTimer = null;
+
+
+if(socket){
+
+try{
+
+socket.disconnect();
+
+}catch(e){}
+
+socket = null;
+
+}
+
+
+$('start').disabled = false;
+
+$('stop').disabled = true;
+
+setConnection('Desconectado');
+
+
+msg(
+`⏹ <b>${escapeHtml(reason)}</b><br>` +
+`Participantes únicos registrados: ` +
+`<b>${people.size}</b>.`
+);
+
+}
+
+
+function connect(){
+
+if(socket) return;
+
+connecting = true;
+
+setConnection(
+'Conectando ao Last Heard…'
+);
+
+
+socket =
+io(
+'https://api.brandmeister.network',
+{
+path:'/lh/socket.io',
+
+transports:['websocket'],
+
+reconnection:true,
+
+reconnectionAttempts:Infinity,
+
+reconnectionDelay:3000,
+
+reconnectionDelayMax:30000,
+
+timeout:10000
+}
+);
+
+
+socket.on(
+'connect',
+() => {
+
+connecting = false;
+
+
+setConnection(
+'Conectado ao BrandMeister',
+'ok'
+);
+
+
+socket.emit(
+'join',
+'everything'
+);
+
+
+msg(
+`🟢 <b>Monitorando TG ${currentTG}</b><br>` +
+`Período: ${fmt(windowStart)} ` +
+`até ${fmt(windowEnd)}.`
+);
+
+}
+);
+
+
+socket.on(
+'disconnect',
+() => {
+
+if(running){
+
+setConnection(
+'Desconectado — tentando reconectar…',
+'bad'
+);
+
+
+msg(
+'⚠️ A conexão com o Last Heard foi interrompida. ' +
+'O aplicativo tentará reconectar automaticamente.'
+);
+
+}
+
+}
+);
+
+
+socket.on(
+'connect_error',
+() => {
+
+if(running){
+
+setConnection(
+'Falha de conexão — tentando novamente…',
+'bad'
+);
+
+}
+
+}
+);
+
+
+socket.on(
+'mqtt',
+data => handleEvent(data)
+);
+
+}
+
+
+function handleEvent(data){
+
+if(!running || !data) return;
+
+
+try{
+
+const raw = data.payload;
+
+
+const p =
+typeof raw === 'string'
+? JSON.parse(raw)
+: raw;
+
+
+if(!p) return;
+
+
+const destination =
+Number(p.DestinationID);
+
+
+if(destination !== currentTG) return;
+
+
+if(String(p.Event) !== 'Session-Stop') return;
+
+
+const epoch =
+Number(p.Stop || 0);
+
+
+const when =
+epoch
+? new Date(epoch * 1000)
+: new Date();
+
+
+if(
+when < windowStart ||
+when > windowEnd
+){
+
+return;
+
+}
+
+
+/*
+  ESTA É A LÓGICA ORIGINAL.
+
+  Se SourceCall existir, usa o indicativo.
+
+  Se não existir, usa o SourceID.
+*/
+
+const call =
+String(
+p.SourceCall ||
+p.SourceID ||
+'DESCONHECIDO'
+)
+.trim()
+.toUpperCase();
+
+
+transmissions++;
+
+
+const old =
+people.get(call);
+
+
+if(old){
+
+old.last = when;
+
+if(p.SourceName){
+
+old.name = p.SourceName;
+
+}
+
+}else{
+
+people.set(
+call,
+{
+call,
+name:p.SourceName || '',
+first:when,
+last:when,
+id:p.SourceID || ''
+}
+);
+
+}
+
+
+render();
+
+
+msg(
+`🟢 <b>Monitorando TG ${currentTG}</b><br>` +
+`Última transmissão: <b>${escapeHtml(call)}</b> ` +
+`às ${when.toLocaleTimeString('pt-BR')}.`
+);
+
+
+}catch(e){
+
+console.warn(
+'Evento Last Heard inválido',
+e
+);
+
+}
+
+}
+
+
+$('start').onclick = () => {
+
+try{
+
+const c = validConfig();
+
+
+currentTG = c.tg;
+
+windowStart = c.start;
+
+windowEnd = c.end;
+
+
+resetResults();
+
+
+$('shownTG').textContent =
+currentTG;
+
+
+running = true;
+
+
+$('start').disabled = true;
+
+$('stop').disabled = false;
+
+
+if(Date.now() < c.start.getTime()){
+
+setConnection(
+'Aguardando horário de início'
+);
+
+
+msg(
+`⏳ Monitoramento agendado para ` +
+`<b>${fmt(c.start)}</b>.<br>` +
+`A página precisa permanecer aberta até o início.`
+);
+
+
+startTimer =
+setTimeout(
+() => {
+
+if(running){
+
+connect();
+
+}
+
+},
+Math.max(
+0,
+c.start.getTime() - Date.now()
+)
+);
+
+}else{
+
+connect();
+
+}
+
+
+endTimer =
+setTimeout(
+() => {
+
+stop(
+'O horário de término configurado foi atingido.'
+);
+
+},
+Math.max(
+0,
+c.end.getTime() - Date.now()
+)
+);
+
+
+}catch(e){
+
+alert(e.message);
+
+}
+
+};
+
+
+$('stop').onclick = () => {
+
+stop();
+
+};
+
+
+$('clear').onclick = () => {
+
+if(running){
+
+return alert(
+'Pare o monitoramento antes de limpar os resultados.'
+);
+
+}
+
+
+resetResults();
+
+
+$('shownTG').textContent =
+'—';
+
+
+msg(
+'Resultados limpos. Pronto para um novo monitoramento.'
+);
+
+};
+
+
+$('copy').onclick = async () => {
+
+if(!people.size){
+
+return alert(
+'Ainda não há participantes registrados.'
+);
+
+}
+
+
+const arr =
+[...people.values()]
+.sort(
+(a,b) => a.first - b.first
+);
+
+
+const text = [
+
+`QAP DMR — MONITORAMENTO TG ${currentTG || $('tg').value}`,
+
+`Participantes únicos: ${people.size}`,
+
+'',
+
+...arr.map(
+(p,i) =>
+`${i+1}. ${p.call} — ` +
+`${p.name || 'Nome não informado'} — ` +
+`primeira: ${fmt(p.first)}`
+)
+
+].join('\n');
+
+
+try{
+
+await navigator.clipboard.writeText(text);
+
+
+alert(
+'Lista copiada para a área de transferência.'
+);
+
+
+}catch(e){
+
+prompt(
+'Copie a lista:',
+text
+);
+
+}
+
+};
+
+
+})();
+
+</script>
+
+</body>
+</html>
