@@ -4,60 +4,63 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#1769e0">
+
 <title>QAP DMR — Monitoramento de TG</title>
 
 <style>
 :root{
   --bg:#eef2f6;
-  --card:#fff;
+  --card:#ffffff;
   --text:#18212b;
   --muted:#69747f;
   --blue:#1769e0;
   --blue2:#0f56bd;
   --red:#c62828;
   --green:#18864b;
+  --orange:#e67e22;
   --border:#dce2e8;
-  --shadow:0 7px 24px rgba(0,0,0,.08)
+  --shadow:0 7px 24px rgba(0,0,0,.08);
 }
 
 *{
-  box-sizing:border-box
+  box-sizing:border-box;
 }
 
 body{
   margin:0;
   background:var(--bg);
   color:var(--text);
-  font-family:Arial,Helvetica,sans-serif
+  font-family:Arial,Helvetica,sans-serif;
 }
 
 .wrap{
   max-width:920px;
   margin:auto;
-  padding:12px 10px 30px
+  padding:12px 10px 30px;
 }
 
-header,.card{
+header,
+.card{
   background:var(--card);
   border-radius:18px;
   box-shadow:var(--shadow);
   padding:20px;
-  margin-bottom:14px
+  margin-bottom:14px;
 }
 
 h1{
   margin:0 0 5px;
-  font-size:clamp(25px,6vw,36px)
+  font-size:clamp(25px,6vw,36px);
 }
 
 h2{
   margin:0 0 16px;
-  font-size:20px
+  font-size:20px;
 }
 
 .sub{
   color:var(--muted);
-  line-height:1.45
+  line-height:1.45;
 }
 
 .status{
@@ -69,35 +72,39 @@ h2{
   background:#f1f4f7;
   border-radius:999px;
   font-size:13px;
-  font-weight:700
+  font-weight:700;
 }
 
 .dot{
   width:9px;
   height:9px;
   border-radius:50%;
-  background:#8b949e
+  background:#8b949e;
 }
 
 .dot.ok{
-  background:var(--green)
+  background:var(--green);
 }
 
 .dot.bad{
-  background:var(--red)
+  background:var(--red);
+}
+
+.dot.wait{
+  background:var(--orange);
 }
 
 .grid{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:13px
+  gap:13px;
 }
 
 label{
   display:block;
   font-size:14px;
   font-weight:700;
-  margin-bottom:6px
+  margin-bottom:6px;
 }
 
 input{
@@ -107,19 +114,19 @@ input{
   border-radius:11px;
   font-size:16px;
   background:#fff;
-  color:var(--text)
+  color:var(--text);
 }
 
 input:focus{
   outline:2px solid #1769e033;
-  border-color:var(--blue)
+  border-color:var(--blue);
 }
 
 .actions{
   display:flex;
   gap:10px;
   flex-wrap:wrap;
-  margin-top:16px
+  margin-top:16px;
 }
 
 button{
@@ -128,31 +135,31 @@ button{
   padding:13px 16px;
   font-size:15px;
   font-weight:700;
-  cursor:pointer
+  cursor:pointer;
 }
 
 .primary{
   background:var(--blue);
-  color:#fff
+  color:#fff;
 }
 
 .primary:hover{
-  background:var(--blue2)
+  background:var(--blue2);
 }
 
 .danger{
   background:var(--red);
-  color:#fff
+  color:#fff;
 }
 
 .secondary{
   background:#e9edf1;
-  color:#27313c
+  color:#27313c;
 }
 
 button:disabled{
   opacity:.45;
-  cursor:not-allowed
+  cursor:not-allowed;
 }
 
 .info{
@@ -162,20 +169,20 @@ button:disabled{
   background:#f3f5f7;
   color:#4f5b66;
   font-size:14px;
-  line-height:1.5
+  line-height:1.5;
 }
 
 .small{
   font-size:12px;
   color:var(--muted);
   line-height:1.5;
-  margin-top:10px
+  margin-top:10px;
 }
 
 .stats{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
 }
 
 .stat{
@@ -183,87 +190,106 @@ button:disabled{
   border:1px solid var(--border);
   border-radius:12px;
   padding:13px;
-  text-align:center
+  text-align:center;
 }
 
 .stat span{
   display:block;
   color:var(--muted);
-  font-size:12px
+  font-size:12px;
 }
 
 .stat b{
   display:block;
-  font-size:25px;
-  margin-top:4px
+  font-size:23px;
+  margin-top:4px;
 }
 
 .table-wrap{
   overflow:auto;
   border:1px solid var(--border);
   border-radius:12px;
-  margin-top:14px
+  margin-top:14px;
 }
 
 table{
   width:100%;
   border-collapse:collapse;
-  min-width:600px
+  min-width:620px;
 }
 
-th,td{
+th,
+td{
   text-align:left;
   padding:11px 10px;
   border-bottom:1px solid var(--border);
-  font-size:14px
+  font-size:14px;
 }
 
 th{
   background:#f6f8fa;
   color:var(--muted);
   font-size:12px;
-  text-transform:uppercase
+  text-transform:uppercase;
 }
 
 tr:last-child td{
-  border-bottom:0
+  border-bottom:0;
 }
 
 .empty{
   text-align:center;
   color:var(--muted);
-  padding:26px
+  padding:26px;
 }
 
 footer{
   text-align:center;
   color:var(--muted);
   font-size:12px;
-  padding:6px
+  padding:6px;
+}
+
+.log{
+  margin-top:14px;
+  background:#111820;
+  color:#d8e0e8;
+  border-radius:12px;
+  padding:12px;
+  font-family:monospace;
+  font-size:12px;
+  line-height:1.5;
+  max-height:170px;
+  overflow:auto;
+}
+
+.log div{
+  margin-bottom:4px;
 }
 
 @media(max-width:650px){
 
   .wrap{
-    padding:9px 8px 24px
+    padding:9px 8px 24px;
   }
 
-  header,.card{
+  header,
+  .card{
     padding:16px;
-    border-radius:15px
+    border-radius:15px;
   }
 
   .grid{
-    grid-template-columns:1fr
+    grid-template-columns:1fr;
   }
 
   .stats{
-    grid-template-columns:repeat(3,1fr)
+    grid-template-columns:repeat(2,1fr);
   }
 
   button{
     flex:1;
-    min-width:135px
+    min-width:135px;
   }
 }
 </style>
@@ -306,24 +332,20 @@ inputmode="numeric"
 placeholder="Ex.: 72429">
 </div>
 
-
 <div>
 <label for="startDate">Data de início</label>
 <input id="startDate" type="date">
 </div>
-
 
 <div>
 <label for="startTime">Horário de início</label>
 <input id="startTime" type="time" value="00:00">
 </div>
 
-
 <div>
 <label for="endDate">Data de término</label>
 <input id="endDate" type="date">
 </div>
-
 
 <div>
 <label for="endTime">Horário de término</label>
@@ -357,8 +379,9 @@ Informe a TG, a data e o período e clique em
 
 
 <div class="small">
-O horário usado é o horário local do celular ou computador.
-Para acompanhar uma rodada, mantenha esta página aberta durante o período.
+A conexão com o BrandMeister é estabelecida imediatamente ao iniciar.
+O programa filtra automaticamente as transmissões pelo TG e pelo período informado.
+Mantenha esta página aberta durante o monitoramento.
 </div>
 
 </section>
@@ -369,7 +392,7 @@ Para acompanhar uma rodada, mantenha esta página aberta durante o período.
 <div class="stats">
 
 <div class="stat">
-<span>Participantes únicos</span>
+<span>Participantes</span>
 <b id="participants">0</b>
 </div>
 
@@ -381,6 +404,11 @@ Para acompanhar uma rodada, mantenha esta página aberta durante o período.
 <div class="stat">
 <span>TG</span>
 <b id="shownTG">—</b>
+</div>
+
+<div class="stat">
+<span>Eventos recebidos</span>
+<b id="events">0</b>
 </div>
 
 </div>
@@ -427,14 +455,25 @@ Nenhuma transmissão registrada.
 </section>
 
 
+<section class="card">
+
+<h2>Diagnóstico da conexão</h2>
+
+<div class="log" id="log">
+
+<div>Aguardando início do monitoramento...</div>
+
+</div>
+
+</section>
+
+
 <footer>
 QAP DMR • Monitorador de TG
 </footer>
 
 </div>
 
-
-<script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
 
 <script>
 
@@ -443,11 +482,20 @@ QAP DMR • Monitorador de TG
 'use strict';
 
 
+/* =========================================================
+   ELEMENTOS
+========================================================= */
+
 const $ = id => document.getElementById(id);
 
-const pad = n => String(n).padStart(2,'0');
+
+/* =========================================================
+   DATA PADRÃO
+========================================================= */
 
 const now = new Date();
+
+const pad = n => String(n).padStart(2,'0');
 
 const today =
 `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
@@ -456,15 +504,17 @@ $('startDate').value = today;
 $('endDate').value = today;
 
 
-let socket = null;
+/* =========================================================
+   VARIÁVEIS
+========================================================= */
+
+let ws = null;
 
 let running = false;
 
-let connecting = false;
+let reconnectTimer = null;
 
 let endTimer = null;
-
-let startTimer = null;
 
 let currentTG = null;
 
@@ -474,26 +524,26 @@ let windowEnd = null;
 
 let transmissions = 0;
 
+let eventCount = 0;
+
+let connected = false;
+
+let socketReady = false;
+
+let subscribed = false;
+
+let connectionAttempts = 0;
+
 const people = new Map();
 
-
-function escapeHtml(v){
-
-  return String(v ?? '').replace(
-    /[&<>"']/g,
-    c => ({
-      '&':'&amp;',
-      '<':'&lt;',
-      '>':'&gt;',
-      '"':'&quot;',
-      "'":'&#039;'
-    }[c])
-  );
-
-}
+const sessions = new Set();
 
 
-function setConnection(text,kind=''){
+/* =========================================================
+   FUNÇÕES DE INTERFACE
+========================================================= */
+
+function setConnection(text, kind=''){
 
   $('connection').textContent = text;
 
@@ -509,7 +559,35 @@ function msg(html){
 }
 
 
+function log(text){
+
+  const box = $('log');
+
+  const line = document.createElement('div');
+
+  const time = new Date().toLocaleTimeString('pt-BR');
+
+  line.textContent = `[${time}] ${text}`;
+
+  box.appendChild(line);
+
+  box.scrollTop = box.scrollHeight;
+
+}
+
+
+function clearLog(){
+
+  $('log').innerHTML = '';
+
+}
+
+
 function makeDate(date,time){
+
+  if(!date || !time){
+    return new Date(NaN);
+  }
 
   const [y,m,d] = date.split('-').map(Number);
 
@@ -528,9 +606,9 @@ function makeDate(date,time){
 }
 
 
-function fmt(d){
+function fmt(date){
 
-  return d.toLocaleString(
+  return date.toLocaleString(
     'pt-BR',
     {
       dateStyle:'short',
@@ -541,54 +619,9 @@ function fmt(d){
 }
 
 
-function resetResults(){
-
-  people.clear();
-
-  transmissions = 0;
-
-  render();
-
-}
-
-
-function render(){
-
-  $('participants').textContent = people.size;
-
-  $('transmissions').textContent = transmissions;
-
-
-  if(!people.size){
-
-    $('list').innerHTML =
-      '<tr><td colspan="4" class="empty">' +
-      'Nenhuma transmissão registrada.' +
-      '</td></tr>';
-
-    return;
-  }
-
-
-  const arr =
-    [...people.values()]
-    .sort((a,b)=>a.first-b.first);
-
-
-  $('list').innerHTML =
-    arr.map(p =>
-
-      `<tr>
-        <td><b>${escapeHtml(p.call)}</b></td>
-        <td>${escapeHtml(p.name || '—')}</td>
-        <td>${fmt(p.first)}</td>
-        <td>${fmt(p.last)}</td>
-      </tr>`
-
-    ).join('');
-
-}
-
+/* =========================================================
+   CONFIGURAÇÃO
+========================================================= */
 
 function validConfig(){
 
@@ -596,50 +629,188 @@ function validConfig(){
 
   if(!Number.isInteger(tg) || tg < 1){
 
-    throw new Error('Informe uma TG válida.');
+    throw new Error(
+      'Informe uma TG válida.'
+    );
 
   }
 
 
-  if(!$('startDate').value ||
-     !$('startTime').value ||
-     !$('endDate').value ||
-     !$('endTime').value){
+  const start = makeDate(
+    $('startDate').value,
+    $('startTime').value
+  );
+
+
+  const end = makeDate(
+    $('endDate').value,
+    $('endTime').value
+  );
+
+
+  if(
+    Number.isNaN(start.getTime()) ||
+    Number.isNaN(end.getTime())
+  ){
 
     throw new Error(
-      'Preencha a data e o horário de início e término.'
+      'Preencha todas as datas e horários.'
     );
 
   }
 
 
-  const s =
-    makeDate(
-      $('startDate').value,
-      $('startTime').value
-    );
-
-
-  const e =
-    makeDate(
-      $('endDate').value,
-      $('endTime').value
-    );
-
-
-  if(isNaN(s) || isNaN(e)){
+  if(end <= start){
 
     throw new Error(
-      'Preencha data e horário corretamente.'
+      'O término deve ser posterior ao início.'
     );
 
   }
 
 
-  if(e <= s){
+  return {
+    tg,
+    start,
+    end
+  };
 
-    throw new Error(
-      'A data/horário de término deve ser posterior ao início.'
-    );
+}
+
+
+/* =========================================================
+   RESULTADOS
+========================================================= */
+
+function resetResults(){
+
+  people.clear();
+
+  sessions.clear();
+
+  transmissions = 0;
+
+  eventCount = 0;
+
+  $('participants').textContent = '0';
+
+  $('transmissions').textContent = '0';
+
+  $('events').textContent = '0';
+
+  $('list').innerHTML = `
+    <tr>
+      <td colspan="4" class="empty">
+        Nenhuma transmissão registrada.
+      </td>
+    </tr>
+  `;
+
+}
+
+
+function render(){
+
+  $('participants').textContent =
+    people.size;
+
+  $('transmissions').textContent =
+    transmissions;
+
+  $('events').textContent =
+    eventCount;
+
+
+  if(!people.size){
+
+    $('list').innerHTML = `
+      <tr>
+        <td colspan="4" class="empty">
+          Nenhuma transmissão registrada.
+        </td>
+      </tr>
+    `;
+
+    return;
 
   }
+
+
+  const arr =
+    [...people.values()]
+    .sort((a,b) => a.first - b.first);
+
+
+  $('list').innerHTML =
+    arr.map(p => `
+
+      <tr>
+
+        <td>
+          <b>${escapeHtml(p.call)}</b>
+        </td>
+
+        <td>
+          ${escapeHtml(p.name || '—')}
+        </td>
+
+        <td>
+          ${fmt(p.first)}
+        </td>
+
+        <td>
+          ${fmt(p.last)}
+        </td>
+
+      </tr>
+
+    `).join('');
+
+}
+
+
+/* =========================================================
+   SEGURANÇA HTML
+========================================================= */
+
+function escapeHtml(value){
+
+  return String(value ?? '')
+    .replace(
+      /[&<>"']/g,
+      c => ({
+        '&':'&amp;',
+        '<':'&lt;',
+        '>':'&gt;',
+        '"':'&quot;',
+        "'":'&#039;'
+      }[c])
+    );
+
+}
+
+
+/* =========================================================
+   REGISTRA PARTICIPANTE
+========================================================= */
+
+function registerParticipant(p, when){
+
+  const call =
+    String(
+      p.SourceCall ||
+      p.SourceID ||
+      'DESCONHECIDO'
+    )
+    .trim()
+    .toUpperCase();
+
+
+  if(!call){
+    return;
+  }
+
+
+  const name =
+    String(
+      p.Source
