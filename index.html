@@ -4,263 +4,271 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#1769e0">
+
 <title>QAP DMR — Monitoramento de TG</title>
 
 <style>
 :root{
---bg:#eef2f6;
---card:#fff;
---text:#18212b;
---muted:#69747f;
---blue:#1769e0;
---blue2:#0f56bd;
---red:#c62828;
---green:#18864b;
---border:#dce2e8;
---shadow:0 7px 24px rgba(0,0,0,.08)
+  --bg:#eef2f6;
+  --card:#fff;
+  --text:#18212b;
+  --muted:#69747f;
+  --blue:#1769e0;
+  --blue2:#0f56bd;
+  --red:#c62828;
+  --green:#18864b;
+  --border:#dce2e8;
+  --shadow:0 7px 24px rgba(0,0,0,.08)
 }
 
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box
+}
 
 body{
-margin:0;
-background:var(--bg);
-color:var(--text);
-font-family:Arial,Helvetica,sans-serif
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,Helvetica,sans-serif
 }
 
 .wrap{
-max-width:920px;
-margin:auto;
-padding:12px 10px 30px
+  max-width:920px;
+  margin:auto;
+  padding:12px 10px 30px
 }
 
-header,.card{
-background:var(--card);
-border-radius:18px;
-box-shadow:var(--shadow);
-padding:20px;
-margin-bottom:14px
+header,
+.card{
+  background:var(--card);
+  border-radius:18px;
+  box-shadow:var(--shadow);
+  padding:20px;
+  margin-bottom:14px
 }
 
 h1{
-margin:0 0 5px;
-font-size:clamp(25px,6vw,36px)
+  margin:0 0 5px;
+  font-size:clamp(25px,6vw,36px)
 }
 
 h2{
-margin:0 0 16px;
-font-size:20px
+  margin:0 0 16px;
+  font-size:20px
 }
 
 .sub{
-color:var(--muted);
-line-height:1.45
+  color:var(--muted);
+  line-height:1.45
 }
 
 .status{
-display:inline-flex;
-align-items:center;
-gap:8px;
-margin-top:12px;
-padding:8px 12px;
-background:#f1f4f7;
-border-radius:999px;
-font-size:13px;
-font-weight:700
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  margin-top:12px;
+  padding:8px 12px;
+  background:#f1f4f7;
+  border-radius:999px;
+  font-size:13px;
+  font-weight:700
 }
 
 .dot{
-width:9px;
-height:9px;
-border-radius:50%;
-background:#8b949e
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  background:#8b949e
 }
 
-.dot.ok{background:var(--green)}
-.dot.bad{background:var(--red)}
+.dot.ok{
+  background:var(--green)
+}
+
+.dot.bad{
+  background:var(--red)
+}
 
 .grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:13px
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:13px
 }
 
 label{
-display:block;
-font-size:14px;
-font-weight:700;
-margin-bottom:6px
+  display:block;
+  font-size:14px;
+  font-weight:700;
+  margin-bottom:6px
 }
 
 input{
-width:100%;
-padding:13px 12px;
-border:1px solid var(--border);
-border-radius:11px;
-font-size:16px;
-background:#fff;
-color:var(--text)
+  width:100%;
+  padding:13px 12px;
+  border:1px solid var(--border);
+  border-radius:11px;
+  font-size:16px;
+  background:#fff;
+  color:var(--text)
 }
 
 input:focus{
-outline:2px solid #1769e033;
-border-color:var(--blue)
+  outline:2px solid #1769e033;
+  border-color:var(--blue)
 }
 
 .actions{
-display:flex;
-gap:10px;
-flex-wrap:wrap;
-margin-top:16px
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:16px
 }
 
 button{
-border:0;
-border-radius:11px;
-padding:13px 16px;
-font-size:15px;
-font-weight:700;
-cursor:pointer
+  border:0;
+  border-radius:11px;
+  padding:13px 16px;
+  font-size:15px;
+  font-weight:700;
+  cursor:pointer
 }
 
 .primary{
-background:var(--blue);
-color:#fff
+  background:var(--blue);
+  color:#fff
 }
 
 .primary:hover{
-background:var(--blue2)
+  background:var(--blue2)
 }
 
 .danger{
-background:var(--red);
-color:#fff
+  background:var(--red);
+  color:#fff
 }
 
 .secondary{
-background:#e9edf1;
-color:#27313c
+  background:#e9edf1;
+  color:#27313c
 }
 
 button:disabled{
-opacity:.45;
-cursor:not-allowed
+  opacity:.45;
+  cursor:not-allowed
 }
 
 .info{
-margin-top:14px;
-padding:12px;
-border-radius:11px;
-background:#f3f5f7;
-color:#4f5b66;
-font-size:14px;
-line-height:1.5
+  margin-top:14px;
+  padding:12px;
+  border-radius:11px;
+  background:#f3f5f7;
+  color:#4f5b66;
+  font-size:14px;
+  line-height:1.5
 }
 
 .small{
-font-size:12px;
-color:var(--muted);
-line-height:1.5;
-margin-top:10px
+  font-size:12px;
+  color:var(--muted);
+  line-height:1.5;
+  margin-top:10px
 }
 
 .stats{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:10px
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px
 }
 
 .stat{
-background:#f6f8fa;
-border:1px solid var(--border);
-border-radius:12px;
-padding:13px;
-text-align:center
+  background:#f6f8fa;
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:13px;
+  text-align:center
 }
 
 .stat span{
-display:block;
-color:var(--muted);
-font-size:12px
+  display:block;
+  color:var(--muted);
+  font-size:12px
 }
 
 .stat b{
-display:block;
-font-size:25px;
-margin-top:4px
+  display:block;
+  font-size:25px;
+  margin-top:4px
 }
 
 .table-wrap{
-overflow:auto;
-border:1px solid var(--border);
-border-radius:12px;
-margin-top:14px
+  overflow:auto;
+  border:1px solid var(--border);
+  border-radius:12px;
+  margin-top:14px
 }
 
 table{
-width:100%;
-border-collapse:collapse;
-min-width:600px
+  width:100%;
+  border-collapse:collapse;
+  min-width:600px
 }
 
-th,td{
-text-align:left;
-padding:11px 10px;
-border-bottom:1px solid var(--border);
-font-size:14px
+th,
+td{
+  text-align:left;
+  padding:11px 10px;
+  border-bottom:1px solid var(--border);
+  font-size:14px
 }
 
 th{
-background:#f6f8fa;
-color:var(--muted);
-font-size:12px;
-text-transform:uppercase
+  background:#f6f8fa;
+  color:var(--muted);
+  font-size:12px;
+  text-transform:uppercase
 }
 
 tr:last-child td{
-border-bottom:0
+  border-bottom:0
 }
 
 .empty{
-text-align:center;
-color:var(--muted);
-padding:26px
+  text-align:center;
+  color:var(--muted);
+  padding:26px
 }
 
 footer{
-text-align:center;
-color:var(--muted);
-font-size:12px;
-padding:6px
-}
-
-.hidden{
-display:none
+  text-align:center;
+  color:var(--muted);
+  font-size:12px;
+  padding:6px
 }
 
 @media(max-width:650px){
-.wrap{
-padding:9px 8px 24px
-}
 
-header,.card{
-padding:16px;
-border-radius:15px
-}
+  .wrap{
+    padding:9px 8px 24px
+  }
 
-.grid{
-grid-template-columns:1fr
-}
+  header,
+  .card{
+    padding:16px;
+    border-radius:15px
+  }
 
-.stats{
-grid-template-columns:repeat(3,1fr)
-}
+  .grid{
+    grid-template-columns:1fr
+  }
 
-button{
-flex:1;
-min-width:135px
-}
+  .stats{
+    grid-template-columns:repeat(3,1fr)
+  }
+
+  button{
+    flex:1;
+    min-width:135px
+  }
 }
 </style>
 </head>
@@ -270,6 +278,7 @@ min-width:135px
 <div class="wrap">
 
 <header>
+
 <h1>📡 QAP DMR</h1>
 
 <div class="sub">
@@ -280,6 +289,7 @@ Monitoramento de Talkgroup DMR em tempo real
 <span id="dot" class="dot"></span>
 <span id="connection">Aguardando</span>
 </div>
+
 </header>
 
 
@@ -292,12 +302,12 @@ Monitoramento de Talkgroup DMR em tempo real
 <div>
 <label for="tg">Talkgroup (TG)</label>
 <input
-id="tg"
-type="number"
-min="1"
-step="1"
-inputmode="numeric"
-placeholder="Ex.: 72429">
+  id="tg"
+  type="number"
+  min="1"
+  step="1"
+  inputmode="numeric"
+  placeholder="Ex.: 72429">
 </div>
 
 <div>
@@ -341,13 +351,18 @@ Limpar resultados
 
 
 <div id="message" class="info">
+
 Informe a TG, a data e o período e clique em
 <b>Iniciar monitoramento</b>.
+
 </div>
 
+
 <div class="small">
+
 O horário usado é o horário local do celular ou computador.
 Para acompanhar uma rodada, mantenha esta página aberta durante o período.
+
 </div>
 
 </section>
@@ -380,12 +395,14 @@ Para acompanhar uma rodada, mantenha esta página aberta durante o período.
 <table>
 
 <thead>
+
 <tr>
 <th>Indicativo</th>
 <th>Nome</th>
 <th>Primeira transmissão</th>
 <th>Última transmissão</th>
 </tr>
+
 </thead>
 
 <tbody id="list">
@@ -423,920 +440,459 @@ QAP DMR • Monitorador de TG
 
 <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
 
+
 <script>
+
 (() => {
 
 'use strict';
 
+
 const $ = id => document.getElementById(id);
 
+
 const pad = n => String(n).padStart(2,'0');
+
 
 const now = new Date();
 
 const today =
 `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
 
+
 $('startDate').value = today;
 $('endDate').value = today;
 
 
 let socket = null;
+
 let running = false;
+
 let connecting = false;
 
 let endTimer = null;
+
 let startTimer = null;
 
 let currentTG = null;
+
 let windowStart = null;
+
 let windowEnd = null;
 
 let transmissions = 0;
 
-const people = new Map();
 
 /*
-=========================================================
-CONTROLE DE DUPLICIDADE
-=========================================================
+  Cada participante passa a ser identificado
+  principalmente pelo seu ID DMR.
 
-Alguns eventos recebidos do Last Heard podem ser enviados
-novamente pelo servidor.
+  Isso permite que:
 
-Este conjunto guarda as transmissões que já foram processadas.
+  7241234
+       ↓
+  posteriormente
+       ↓
+  PU9ABC
 
-Quando exatamente o mesmo evento chegar novamente,
-ele será ignorado.
+  seja tratado como a MESMA pessoa.
+*/
 
-=========================================================
+const people = new Map();
+
+
+/*
+  Guarda os eventos já processados para evitar
+  que o mesmo evento seja contado duas vezes.
 */
 
 const processedEvents = new Set();
 
-
-/*
-Mantém o conjunto de eventos sob controle para evitar
-crescimento indefinido da memória em monitoramentos longos.
-*/
-
 const MAX_PROCESSED_EVENTS = 5000;
 
 
-/*
-=========================================================
-FUNÇÕES AUXILIARES
-=========================================================
-*/
+/* -------------------------------------------------
+   FUNÇÕES BÁSICAS
+------------------------------------------------- */
 
-function escapeHtml(v){
 
-return String(v ?? '').replace(
-/[&<>"']/g,
-c => ({
-'&':'&amp;',
-'<':'&lt;',
-'>':'&gt;',
-'"':'&quot;',
-"'":'&#039;'
-}[c])
-);
+function escapeHtml(value){
+
+  return String(value ?? '').replace(
+    /[&<>"']/g,
+    c => ({
+      '&':'&amp;',
+      '<':'&lt;',
+      '>':'&gt;',
+      '"':'&quot;',
+      "'":'&#039;'
+    }[c])
+  );
 
 }
 
 
 function setConnection(text,kind=''){
 
-$('connection').textContent = text;
+  $('connection').textContent = text;
 
-$('dot').className = 'dot ' + kind;
+  $('dot').className = 'dot ' + kind;
 
 }
 
 
 function msg(html){
 
-$('message').innerHTML = html;
+  $('message').innerHTML = html;
 
 }
 
 
 function makeDate(date,time){
 
-const [y,m,d] = date.split('-').map(Number);
+  const [y,m,d] = date.split('-').map(Number);
 
-const [h,mi] = time.split(':').map(Number);
+  const [h,mi] = time.split(':').map(Number);
 
-return new Date(
-y,
-m-1,
-d,
-h,
-mi,
-0,
-0
-);
+  return new Date(
+    y,
+    m-1,
+    d,
+    h,
+    mi,
+    0,
+    0
+  );
 
 }
 
 
-function fmt(d){
+function fmt(date){
 
-return d.toLocaleString(
-'pt-BR',
-{
-dateStyle:'short',
-timeStyle:'medium'
+  return date.toLocaleString(
+    'pt-BR',
+    {
+      dateStyle:'short',
+      timeStyle:'medium'
+    }
+  );
+
 }
-);
+
+
+/* -------------------------------------------------
+   IDENTIFICAÇÃO DO PARTICIPANTE
+------------------------------------------------- */
+
+
+/*
+  Verifica se o valor parece ser um ID DMR.
+
+  Exemplo:
+  1234567 → SIM
+  7241234 → SIM
+
+  PU9DPA → NÃO
+*/
+
+function isDMRId(value){
+
+  const s = String(value ?? '').trim();
+
+  return /^\d{5,10}$/.test(s);
 
 }
 
 
 /*
-=========================================================
-LIMPAR RESULTADOS
-=========================================================
+  Verifica se o valor parece ser um indicativo.
+
+  A ideia é NÃO considerar um número de sete
+  dígitos como indicativo.
+
+  Exemplos:
+
+  PU9DPA → SIM
+  PY2ABC → SIM
+  7241234 → NÃO
 */
+
+function isCallsign(value){
+
+  const s = String(value ?? '')
+    .trim()
+    .toUpperCase();
+
+  if(!s) return false;
+
+  if(isDMRId(s)) return false;
+
+  /*
+    Indicativo precisa conter pelo menos
+    uma letra e um número.
+  */
+
+  return /[A-Z]/.test(s) && /\d/.test(s);
+
+}
+
+
+/*
+  Obtém o indicativo verdadeiro.
+
+  SourceCall é a fonte principal.
+
+  Se vier apenas um número, ele NÃO será
+  tratado como indicativo.
+*/
+
+function getCallsign(p){
+
+  const call = String(
+    p.SourceCall ?? ''
+  ).trim().toUpperCase();
+
+  if(isCallsign(call)){
+
+    return call;
+
+  }
+
+  return '';
+
+}
+
+
+/*
+  Obtém o ID DMR.
+
+  SourceID é a fonte principal.
+*/
+
+function getDMRId(p){
+
+  const id = String(
+    p.SourceID ?? ''
+  ).trim();
+
+  if(isDMRId(id)){
+
+    return id;
+
+  }
+
+  return '';
+
+}
+
+
+/*
+  Cria uma chave única para o participante.
+
+  PRIORIDADE:
+
+  1. SourceID
+  2. SourceCall
+
+  Assim o ID permite juntar depois o
+  indicativo correto.
+*/
+
+function getPersonKey(p){
+
+  const id = getDMRId(p);
+
+  if(id){
+
+    return 'ID:' + id;
+
+  }
+
+  const call = getCallsign(p);
+
+  if(call){
+
+    return 'CALL:' + call;
+
+  }
+
+  return '';
+
+}
+
+
+/* -------------------------------------------------
+   RESET / RENDER
+------------------------------------------------- */
+
 
 function resetResults(){
 
-people.clear();
+  people.clear();
 
-transmissions = 0;
+  transmissions = 0;
 
-processedEvents.clear();
+  processedEvents.clear();
 
-render();
+  render();
 
 }
 
-
-/*
-=========================================================
-ATUALIZAR TELA
-=========================================================
-*/
 
 function render(){
 
-$('participants').textContent = people.size;
+  $('participants').textContent = people.size;
 
-$('transmissions').textContent = transmissions;
+  $('transmissions').textContent = transmissions;
 
 
-if(!people.size){
+  if(!people.size){
 
-$('list').innerHTML =
-'<tr><td colspan="4" class="empty">Nenhuma transmissão registrada.</td></tr>';
+    $('list').innerHTML =
+      '<tr>' +
+      '<td colspan="4" class="empty">' +
+      'Nenhuma transmissão registrada.' +
+      '</td>' +
+      '</tr>';
 
-return;
+    return;
+
+  }
+
+
+  const arr = [...people.values()]
+    .sort((a,b) => a.first - b.first);
+
+
+  $('list').innerHTML = arr.map(p => {
+
+    /*
+      Se já temos indicativo:
+      mostra o indicativo.
+
+      Caso contrário:
+      mostra o ID DMR como identificação
+      provisória.
+    */
+
+    const displayCall =
+      p.call ||
+      (p.id ? 'ID ' + p.id : 'Desconhecido');
+
+
+    return `
+      <tr>
+
+        <td>
+          <b>${escapeHtml(displayCall)}</b>
+        </td>
+
+        <td>
+          ${escapeHtml(p.name || '—')}
+        </td>
+
+        <td>
+          ${fmt(p.first)}
+        </td>
+
+        <td>
+          ${fmt(p.last)}
+        </td>
+
+      </tr>
+    `;
+
+  }).join('');
 
 }
 
 
-const arr =
-[...people.values()]
-.sort((a,b) => a.first - b.first);
+/* -------------------------------------------------
+   CONFIGURAÇÃO
+------------------------------------------------- */
 
-
-$('list').innerHTML = arr.map(p => `
-
-<tr>
-
-<td>
-<b>${escapeHtml(p.call)}</b>
-</td>
-
-<td>
-${escapeHtml(p.name || '—')}
-</td>
-
-<td>
-${fmt(p.first)}
-</td>
-
-<td>
-${fmt(p.last)}
-</td>
-
-</tr>
-
-`).join('');
-
-}
-
-
-/*
-=========================================================
-VALIDAR CONFIGURAÇÃO
-=========================================================
-*/
 
 function validConfig(){
 
-const tg = Number($('tg').value);
+  const tg = Number($('tg').value);
 
-if(!Number.isInteger(tg) || tg < 1){
 
-throw new Error('Informe uma TG válida.');
+  if(!Number.isInteger(tg) || tg < 1){
+
+    throw new Error(
+      'Informe uma TG válida.'
+    );
+
+  }
+
+
+  const s = makeDate(
+    $('startDate').value,
+    $('startTime').value
+  );
+
+
+  const e = makeDate(
+    $('endDate').value,
+    $('endTime').value
+  );
+
+
+  if(isNaN(s) || isNaN(e)){
+
+    throw new Error(
+      'Preencha data e horário.'
+    );
+
+  }
+
+
+  if(e <= s){
+
+    throw new Error(
+      'A data/horário de término deve ser posterior ao início.'
+    );
+
+  }
+
+
+  return {
+    tg,
+    start:s,
+    end:e
+  };
 
 }
 
 
-const s =
-makeDate(
-$('startDate').value,
-$('startTime').value
-);
+/* -------------------------------------------------
+   PARAR MONITORAMENTO
+------------------------------------------------- */
 
-
-const e =
-makeDate(
-$('endDate').value,
-$('endTime').value
-);
-
-
-if(isNaN(s) || isNaN(e)){
-
-throw new Error('Preencha data e horário.');
-
-}
-
-
-if(e <= s){
-
-throw new Error(
-'A data/horário de término deve ser posterior ao início.'
-);
-
-}
-
-
-return {
-tg,
-start:s,
-end:e
-};
-
-}
-
-
-/*
-=========================================================
-PARAR MONITORAMENTO
-=========================================================
-*/
 
 function stop(
-reason='Monitoramento parado pelo usuário.'
+  reason='Monitoramento parado pelo usuário.'
 ){
 
-running = false;
+  running = false;
 
-connecting = false;
+  connecting = false;
 
-clearTimeout(startTimer);
-clearTimeout(endTimer);
 
-startTimer = null;
-endTimer = null;
+  clearTimeout(startTimer);
 
+  clearTimeout(endTimer);
 
-if(socket){
 
-try{
+  startTimer = null;
 
-socket.disconnect();
+  endTimer = null;
 
-}catch(e){}
 
-socket = null;
+  if(socket){
 
-}
+    try{
 
+      socket.disconnect();
 
-$('start').disabled = false;
-
-$('stop').disabled = true;
-
-setConnection('Desconectado');
-
-msg(
-`⏹ <b>${escapeHtml(reason)}</b><br>
-Participantes únicos registrados:
-<b>${people.size}</b>.`
-);
-
-}
-
-
-/*
-=========================================================
-CRIAR IDENTIFICADOR ÚNICO DO EVENTO
-=========================================================
-
-Usamos os principais dados disponíveis no evento.
-
-Assim, se o mesmo Session-Stop chegar novamente,
-ele terá a mesma chave e será ignorado.
-
-=========================================================
-*/
-
-function makeEventKey(p,when){
-
-const source =
-String(
-p.SourceCall ||
-p.SourceID ||
-''
-).trim().toUpperCase();
-
-
-const destination =
-String(
-p.DestinationID ||
-''
-).trim();
-
-
-const stop =
-String(
-p.Stop ||
-Math.floor(when.getTime()/1000)
-);
-
-
-const event =
-String(
-p.Event ||
-''
-).trim();
-
-
-return [
-destination,
-source,
-stop,
-event
-].join('|');
-
-}
-
-
-/*
-=========================================================
-REGISTRAR EVENTO PROCESSADO
-=========================================================
-*/
-
-function rememberEvent(key){
-
-if(processedEvents.has(key)){
-
-return false;
-
-}
-
-
-/*
-Se atingir o limite, removemos os eventos mais antigos.
-*/
-
-if(processedEvents.size >= MAX_PROCESSED_EVENTS){
-
-const first =
-processedEvents.values().next().value;
-
-if(first){
-
-processedEvents.delete(first);
-
-}
-
-}
-
-
-processedEvents.add(key);
-
-return true;
-
-}
-
-
-/*
-=========================================================
-CONEXÃO COM BRANDMEISTER
-=========================================================
-*/
-
-function connect(){
-
-if(socket)return;
-
-connecting = true;
-
-setConnection(
-'Conectando ao Last Heard…'
-);
-
-
-socket = io(
-'https://api.brandmeister.network',
-{
-path:'/lh/socket.io',
-transports:['websocket'],
-
-reconnection:true,
-
-reconnectionAttempts:Infinity,
-
-reconnectionDelay:3000,
-
-reconnectionDelayMax:30000,
-
-timeout:10000
-}
-);
-
-
-socket.on(
-'connect',
-() => {
-
-connecting = false;
-
-setConnection(
-'Conectado ao BrandMeister',
-'ok'
-);
-
-
-socket.emit(
-'join',
-'everything'
-);
-
-
-msg(
-`🟢 <b>Monitorando TG ${currentTG}</b><br>
-Período: ${fmt(windowStart)}
-até ${fmt(windowEnd)}.`
-);
-
-}
-);
-
-
-socket.on(
-'disconnect',
-() => {
-
-if(running){
-
-setConnection(
-'Desconectado — tentando reconectar…',
-'bad'
-);
-
-
-msg(
-'⚠️ A conexão com o Last Heard foi interrompida. ' +
-'O aplicativo tentará reconectar automaticamente.'
-);
-
-}
-
-}
-);
-
-
-socket.on(
-'connect_error',
-() => {
-
-if(running){
-
-setConnection(
-'Falha de conexão — tentando novamente…',
-'bad'
-);
-
-}
-
-}
-);
-
-
-socket.on(
-'mqtt',
-data => handleEvent(data)
-);
-
-}
-
-
-/*
-=========================================================
-PROCESSAR EVENTO
-=========================================================
-*/
-
-function handleEvent(data){
-
-if(!running || !data)return;
-
-
-try{
-
-const raw = data.payload;
-
-const p =
-typeof raw === 'string'
-? JSON.parse(raw)
-: raw;
-
-
-if(!p)return;
-
-
-/*
-Verifica o TG.
-*/
-
-const destination =
-Number(p.DestinationID);
-
-
-if(destination !== currentTG)return;
-
-
-/*
-Só interessa o encerramento da transmissão.
-*/
-
-if(String(p.Event) !== 'Session-Stop')return;
-
-
-/*
-Obtém o horário.
-*/
-
-const epoch =
-Number(p.Stop || 0);
-
-
-const when =
-epoch
-? new Date(epoch * 1000)
-: new Date();
-
-
-/*
-Verifica se o evento está dentro do período configurado.
-*/
-
-if(
-when < windowStart ||
-when > windowEnd
-){
-
-return;
-
-}
-
-
-/*
-Indicativo.
-*/
-
-const call =
-String(
-p.SourceCall ||
-p.SourceID ||
-'DESCONHECIDO'
-)
-.trim()
-.toUpperCase();
-
-
-/*
-=========================================================
-ANTI-DUPLICAÇÃO
-=========================================================
-
-Antes de incrementar o contador,
-verificamos se este evento já foi recebido.
-
-=========================================================
-*/
-
-const eventKey =
-makeEventKey(p,when);
-
-
-if(!rememberEvent(eventKey)){
-
-/*
-Evento repetido.
-Não incrementa transmissões
-e não altera a tabela.
-*/
-
-return;
-
-}
-
-
-/*
-=========================================================
-REGISTRAR TRANSMISSÃO NOVA
-=========================================================
-*/
-
-transmissions++;
-
-
-const old =
-people.get(call);
-
-
-if(old){
-
-/*
-O participante já existe.
-
-Atualizamos somente a última transmissão.
-*/
-
-old.last = when;
-
-if(p.SourceName){
-
-old.name = p.SourceName;
-
-}
-
-}else{
-
-/*
-Novo participante.
-*/
-
-people.set(
-call,
-{
-call,
-name:p.SourceName || '',
-first:when,
-last:when,
-id:p.SourceID || ''
-}
-);
-
-}
-
-
-/*
-Atualiza a tela.
-*/
-
-render();
-
-
-msg(
-`🟢 <b>Monitorando TG ${currentTG}</b><br>
-Última transmissão:
-<b>${escapeHtml(call)}</b>
-às ${when.toLocaleTimeString('pt-BR')}.`
-);
-
-
-}catch(e){
-
-console.warn(
-'Evento Last Heard inválido',
-e
-);
-
-}
-
-}
-
-
-/*
-=========================================================
-BOTÃO INICIAR
-=========================================================
-*/
-
-$('start').onclick = () => {
-
-try{
-
-const c = validConfig();
-
-currentTG = c.tg;
-
-windowStart = c.start;
-
-windowEnd = c.end;
-
-
-/*
-Começa uma nova sessão de monitoramento.
-*/
-
-resetResults();
-
-
-$('shownTG').textContent =
-currentTG;
-
-
-running = true;
-
-$('start').disabled = true;
-
-$('stop').disabled = false;
-
-
-/*
-Se o horário de início ainda não chegou,
-aguarda automaticamente.
-*/
-
-if(Date.now() < c.start.getTime()){
-
-setConnection(
-'Aguardando horário de início'
-);
-
-
-msg(
-`⏳ Monitoramento agendado para
-<b>${fmt(c.start)}</b>.<br>
-A página precisa permanecer aberta até o início.`
-);
-
-
-startTimer =
-setTimeout(
-() => {
-
-if(running){
-
-connect();
-
-}
-
-},
-Math.max(
-0,
-c.start.getTime() - Date.now()
-)
-);
-
-}else{
-
-connect();
-
-}
-
-
-/*
-Agendar encerramento automático.
-*/
-
-endTimer =
-setTimeout(
-() => {
-
-stop(
-'O horário de término configurado foi atingido.'
-);
-
-},
-Math.max(
-0,
-c.end.getTime() - Date.now()
-)
-);
-
-
-}catch(e){
-
-alert(e.message);
-
-}
-
-};
-
-
-/*
-=========================================================
-BOTÃO PARAR
-=========================================================
-*/
-
-$('stop').onclick = () => {
-
-stop();
-
-};
-
-
-/*
-=========================================================
-BOTÃO LIMPAR
-=========================================================
-*/
-
-$('clear').onclick = () => {
-
-if(running){
-
-return alert(
-'Pare o monitoramento antes de limpar os resultados.'
-);
-
-}
-
-
-resetResults();
-
-$('shownTG').textContent = '—';
-
-msg(
-'Resultados limpos. Pronto para um novo monitoramento.'
-);
-
-};
-
-
-/*
-=========================================================
-COPIAR PARTICIPANTES
-=========================================================
-*/
-
-$('copy').onclick = async () => {
-
-if(!people.size){
-
-return alert(
-'Ainda não há participantes registrados.'
-);
-
-}
-
-
-const arr =
-[...people.values()]
-.sort(
-(a,b) => a.first - b.first
-);
-
-
-const text = [
-
-`QAP DMR — MONITORAMENTO TG ${currentTG || $('tg').value}`,
-
-`Participantes únicos: ${people.size}`,
-
-'',
-
-...arr.map(
-(p,i) =>
-`${i+1}. ${p.call} — ${p.name || 'Nome não informado'} — primeira: ${fmt(p.first)}`
-)
-
-].join('\n');
-
-
-try{
-
-await navigator.clipboard.writeText(text);
-
-alert(
-'Lista copiada para a área de transferência.'
-);
-
-}catch(e){
-
-prompt(
-'Copie a lista:',
-text
-);
-
-}
-
-};
-
-})();
-</script>
-
-</body>
-</html>
+    }
